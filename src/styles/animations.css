@@ -1,0 +1,17 @@
+@keyframes glitch {
+  0% { transform: skew(0deg); }
+  20% { transform: skew(10deg); }
+  21% { transform: skew(-10deg); }
+  23% { transform: skew(0deg); }
+  100% { transform: skew(0deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+} 
