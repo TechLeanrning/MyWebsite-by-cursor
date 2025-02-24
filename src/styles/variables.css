@@ -1,20 +1,126 @@
 :root {
-  --color-primary: #00ffff;
-  --color-secondary: #ff00ff;
-  --color-background: #1a1a1a;
-  --color-text: #ffffff;
-  --color-text-secondary: #888888;
+  /* 颜色 - 更通透现代的配色 */
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f8fafc;
+  --color-text-secondary: rgba(248, 250, 252, 0.75);
+  --color-primary: #38bdf8;
+  --color-secondary: #818cf8;
+  --color-accent: #0ea5e9;
   
-  --gradient-primary: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-  --gradient-background: linear-gradient(135deg, #0a1a2f 0%, #0d0d2b 100%);
+  /* 渐变 */
+  --gradient-primary: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+  --gradient-hover: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+  --gradient-background: radial-gradient(
+    circle at top right,
+    #1e293b 0%,
+    #0f172a 100%
+  );
   
-  --border-radius-small: 8px;
-  --border-radius-medium: 15px;
-  --border-radius-large: 20px;
+  /* 阴影 */
+  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.2);
   
-  --spacing-small: 1rem;
-  --spacing-medium: 2rem;
-  --spacing-large: 4rem;
+  /* 圆角 */
+  --border-radius-sm: 6px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 20px;
   
-  --transition-default: all 0.3s ease;
+  /* 间距 */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  
+  /* 过渡 */
+  --transition-fast: all 0.2s ease;
+  --transition-normal: all 0.3s ease;
+  --transition-slow: all 0.5s ease;
+  
+  /* 字体大小 */
+  --font-size-xs: 0.85rem;
+  --font-size-sm: 0.95rem;
+  --font-size-md: 1.1rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 2rem;
+  --font-size-2xl: 2.5rem;
+  --font-size-3xl: 3rem;
+  
+  /* 字重 */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  
+  /* 布局 */
+  --container-padding: 8%;
+  --max-width: 1200px;
+  --header-height: 60px;
+  
+  /* 每个部分的背景色 - 浅色系但各具特色 */
+  --section-hero-bg: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);  /* 纯净白背景 */
+  --section-tech-bg: linear-gradient(145deg, #f0f7ff 0%, #e6f1fe 100%);  /* 科技感浅蓝背景 */
+  --section-projects-bg: linear-gradient(145deg, #f5f3ff 0%, #ede9fe 100%);  /* 专业感浅紫背景 */
+  --section-stats-bg: linear-gradient(145deg, #ecfdf5 0%, #e0f2f1 100%);  /* 清新浅绿背景 */
+  
+  /* 每个部分的强调色 - 保持鲜明特色 */
+  --accent-hero: #FF6B6B;  /* 活力红 */
+  --accent-tech: #3B82F6;  /* 科技蓝 */
+  --accent-projects: #8B5CF6;  /* 优雅紫 */
+  --accent-stats: #10B981;  /* 生机绿 */
+  
+  /* 每个部分的渐变 - 富有层次感 */
+  --gradient-hero: linear-gradient(135deg, #FF6B6B 0%, #FF9D43 100%);  /* 红橙渐变 */
+  --gradient-tech: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);  /* 蓝色渐变 */
+  --gradient-projects: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%);  /* 紫色渐变 */
+  --gradient-stats: linear-gradient(135deg, #10B981 0%, #34D399 100%);  /* 绿色渐变 */
+  
+  /* 装饰性渐变 - 对应每个部分的主色调 */
+  --gradient-glow-1: linear-gradient(135deg, rgba(255, 107, 107, 0.08) 0%, rgba(255, 157, 67, 0.08) 100%);
+  --gradient-glow-2: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(96, 165, 250, 0.08) 100%);
+  --gradient-glow-3: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(167, 139, 250, 0.08) 100%);
+  
+  /* 卡片样式 - 统一浅色风格 */
+  --bg-card: rgba(255, 255, 255, 0.7);
+  --bg-card-hover: rgba(255, 255, 255, 0.9);
+  --border-card: 1px solid rgba(0, 0, 0, 0.08);
+  
+  /* 文字颜色 - 统一深色文字 */
+  --color-text: #1F2937;
+  --color-text-secondary: rgba(31, 41, 55, 0.75);
+  
+  /* 阴影效果 - 轻柔立体感 */
+  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.08);
+  
+  /* 毛玻璃效果 */
+  --blur-amount: blur(10px);
+}
+
+/* 深色主题 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0a0c1b;
+    --color-text: #ffffff;
+    --color-text-secondary: #8892b0;
+  }
+}
+
+/* 浅色主题 */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-background: #ffffff;
+    --color-text: #0a0c1b;
+    --color-text-secondary: #4a5568;
+  }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  :root {
+    --container-padding: 5%;
+    --font-size-2xl: 2rem;
+    --font-size-3xl: 2.5rem;
+  }
 } 

@@ -1,120 +1,93 @@
 <template>
   <div class="tech-background">
     <div class="grid"></div>
-    <div class="particles">
-      <div v-for="i in 50" :key="i" class="particle"
-           :style="getParticleStyle(i)"></div>
-    </div>
     <div class="glow-effects">
       <div class="glow glow-1"></div>
       <div class="glow glow-2"></div>
     </div>
+    <div class="noise"></div>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'TechBackground',
-  methods: {
-    getParticleStyle(i) {
-      const size = Math.random() * 3 + 1
-      const left = Math.random() * 100
-      const animationDuration = Math.random() * 20 + 10
-      const delay = Math.random() * -20
-      return {
-        width: `${size}px`,
-        height: `${size}px`,
-        left: `${left}%`,
-        animationDuration: `${animationDuration}s`,
-        animationDelay: `${delay}s`
-      }
-    }
-  }
-}
-</script>
 
 <style scoped>
 .tech-background {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   z-index: -1;
-  background: linear-gradient(135deg, #0a1a2f 0%, #0d0d2b 100%);
+  background: var(--gradient-background);
   overflow: hidden;
 }
 
 .grid {
   position: absolute;
-  width: 200%;
-  height: 200%;
+  inset: 0;
   background-image: 
-    linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 50px 50px;
-  transform: rotate(-45deg);
-  animation: gridMove 20s linear infinite;
-}
-
-.particles {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.particle {
-  position: absolute;
-  background: rgba(0, 255, 255, 0.5);
-  border-radius: 50%;
-  animation: particleFloat linear infinite;
+    linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(
+    circle at 50% 30%,
+    black 30%,
+    transparent 70%
+  );
+  transform: perspective(1000px) rotateX(60deg) translateY(-30%) scale(2);
+  transform-origin: center top;
+  opacity: 0.5;
 }
 
 .glow-effects {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
 }
 
 .glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(150px);
+  opacity: 0.15;
 }
 
 .glow-1 {
-  top: 20%;
-  left: 20%;
-  width: 300px;
-  height: 300px;
-  background: rgba(0, 255, 255, 0.15);
-  animation: glowPulse 8s ease-in-out infinite;
+  top: -20%;
+  left: 25%;
+  width: 1200px;
+  height: 1200px;
+  background: var(--color-primary);
+  opacity: 0.1;
+  animation: glowPulse 20s ease-in-out infinite alternate;
 }
 
 .glow-2 {
-  bottom: 30%;
-  right: 20%;
-  width: 400px;
-  height: 400px;
-  background: rgba(255, 0, 255, 0.1);
-  animation: glowPulse 12s ease-in-out infinite alternate;
+  bottom: -30%;
+  right: 15%;
+  width: 1000px;
+  height: 1000px;
+  background: var(--color-secondary);
+  opacity: 0.08;
+  animation: glowPulse 25s ease-in-out infinite;
 }
 
-@keyframes gridMove {
-  0% { transform: rotate(-45deg) translateY(0); }
-  100% { transform: rotate(-45deg) translateY(-50%); }
-}
-
-@keyframes particleFloat {
-  0% { transform: translateY(100vh); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(-100vh); opacity: 0; }
+.noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  mix-blend-mode: overlay;
 }
 
 @keyframes glowPulse {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.2); opacity: 0.8; }
+  0%, 100% { transform: scale(1); opacity: 0.15; }
+  50% { transform: scale(1.1); opacity: 0.2; }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    background-size: 24px 24px;
+  }
+  
+  .glow {
+    filter: blur(100px);
+  }
 }
 </style> 

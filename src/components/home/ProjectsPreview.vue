@@ -2,9 +2,9 @@
   <section class="projects-section" id="projects">
     <div class="section-header">
       <h2 class="section-title">
-        <gradient-text>精选</gradient-text> 项目
+        <gradient-text>项目作品</gradient-text>
       </h2>
-      <p class="section-subtitle">我的最新作品展示</p>
+      <p class="section-desc">我的一些开源项目和作品</p>
     </div>
 
     <div class="projects-grid">
@@ -14,74 +14,38 @@
            @mouseenter="project.isHovered = true"
            @mouseleave="project.isHovered = false">
         <div class="project-preview">
-          <img :src="`https://via.placeholder.com/800x400?text=${project.name}`" :alt="project.name">
-          <div class="project-overlay" :class="{ active: project.isHovered }">
-            <div class="project-links">
-              <a :href="project.demo" target="_blank" class="project-link">
-                <i class="fas fa-external-link-alt"></i>
-                在线演示
-              </a>
-              <a :href="project.github" target="_blank" class="project-link">
-                <i class="fab fa-github"></i>
-                源代码
-              </a>
-            </div>
+          <img :src="project.image" :alt="project.name">
+          <div class="project-links" :class="{ active: project.isHovered }">
+            <a :href="project.demo" target="_blank" class="project-link">
+              <i class="fas fa-external-link-alt"></i>
+              预览
+            </a>
+            <a :href="project.github" target="_blank" class="project-link">
+              <i class="fab fa-github"></i>
+              源码
+            </a>
           </div>
         </div>
+        
         <div class="project-info">
-          <h3 class="project-title">{{ project.name }}</h3>
-          <p class="project-description">{{ project.description }}</p>
+          <h3>{{ project.name }}</h3>
+          <p>{{ project.description }}</p>
           <div class="project-tech">
             <span v-for="tech in project.technologies" 
-                  :key="tech.name" 
+                  :key="tech"
                   class="tech-tag">
-              <i :class="tech.icon"></i>
-              {{ tech.name }}
+              {{ tech }}
             </span>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="projects-showcase">
-      <div class="showcase-stats">
-        <div class="stat-item" v-for="stat in projectStats" :key="stat.label">
-          <div class="stat-icon">
-            <i :class="stat.icon"></i>
-          </div>
-          <div class="stat-value">{{ stat.value }}</div>
-          <div class="stat-label">{{ stat.label }}</div>
-        </div>
-      </div>
-      
-      <div class="github-activity">
-        <h3>GitHub 贡献</h3>
-        <div class="contribution-graph">
-          <div class="contribution-grid">
-            <div v-for="(week, weekIndex) in contributionData" 
-                 :key="weekIndex"
-                 class="contribution-week">
-              <div v-for="(day, dayIndex) in week" 
-                   :key="`${weekIndex}-${dayIndex}`"
-                   class="contribution-day"
-                   :style="{ backgroundColor: getContributionColor(day) }"
-                   :title="`${day} contributions`">
-              </div>
-            </div>
-          </div>
-          <div class="contribution-legend">
-            <span>少</span>
-            <div class="legend-colors">
-              <div v-for="(color, index) in contributionColors" 
-                   :key="index"
-                   class="legend-color"
-                   :style="{ backgroundColor: color }">
-              </div>
-            </div>
-            <span>多</span>
-          </div>
-        </div>
-      </div>
+    <div class="more-projects">
+      <a href="https://github.com/yourusername" target="_blank" class="github-link">
+        <i class="fab fa-github"></i>
+        在 GitHub 上查看更多项目
+      </a>
     </div>
   </section>
 </template>
@@ -99,93 +63,35 @@ export default {
       projects: [
         {
           id: 1,
-          name: '智能商务平台',
-          description: '基于AI的新一代电商解决方案，整合机器学习实现智能推荐和用户行为分析',
-          image: 'https://via.placeholder.com/800x400?text=智能商务平台',
-          technologies: [
-            {
-              name: 'Vue.js',
-              icon: 'fab fa-vuejs'
-            },
-            {
-              name: 'Node.js',
-              icon: 'fab fa-node-js'
-            },
-            {
-              name: 'Python',
-              icon: 'fab fa-python'
-            }
-          ],
-          demo: '#',
-          github: '#',
+          name: '个人博客系统',
+          description: '基于 Vue3 + TypeScript 开发的现代化博客系统，支持 Markdown 编辑和实时预览',
+          image: 'https://via.placeholder.com/600x340',
+          technologies: ['Vue3', 'TypeScript', 'Vite', 'TailwindCSS'],
+          demo: 'https://demo.example.com',
+          github: 'https://github.com/example/blog',
           isHovered: false
         },
         {
           id: 2,
-          name: 'Cloud-Native DevOps Dashboard',
-          description: 'Comprehensive DevOps monitoring and management platform with real-time metrics.',
-          image: 'https://via.placeholder.com/600x400',
-          technologies: ['React', 'Go', 'Docker', 'Kubernetes'],
-          demo: '#',
-          github: '#',
+          name: '在线代码编辑器',
+          description: '支持多种编程语言的在线 IDE，集成代码高亮和实时运行功能',
+          image: 'https://via.placeholder.com/600x340',
+          technologies: ['React', 'Monaco Editor', 'WebAssembly', 'Node.js'],
+          demo: 'https://demo.example.com',
+          github: 'https://github.com/example/code-editor',
           isHovered: false
         },
         {
           id: 3,
-          name: 'Blockchain-based Supply Chain',
-          description: 'Decentralized supply chain management system with smart contracts.',
-          image: 'https://via.placeholder.com/600x400',
-          technologies: ['Solidity', 'Web3.js', 'React', 'Node.js'],
-          demo: '#',
-          github: '#',
+          name: '智能聊天机器人',
+          description: '基于 GPT-3 API 开发的智能对话系统，支持多轮对话和上下文理解',
+          image: 'https://via.placeholder.com/600x340',
+          technologies: ['Vue.js', 'OpenAI API', 'Express', 'Socket.io'],
+          demo: 'https://demo.example.com',
+          github: 'https://github.com/example/chatbot',
           isHovered: false
         }
-      ],
-      projectStats: [
-        {
-          icon: 'fas fa-code-branch',
-          value: '50+',
-          label: '完成项目'
-        },
-        {
-          icon: 'fas fa-code-commit',
-          value: '1000+',
-          label: '代码提交'
-        },
-        {
-          icon: 'fas fa-users',
-          value: '20+',
-          label: '客户好评'
-        }
-      ],
-      contributionColors: [
-        'rgba(0, 255, 255, 0.1)',
-        'rgba(0, 255, 255, 0.2)',
-        'rgba(0, 255, 255, 0.4)',
-        'rgba(0, 255, 255, 0.6)',
-        'rgba(0, 255, 255, 0.8)'
-      ],
-      contributionData: this.generateContributionData()
-    }
-  },
-  methods: {
-    generateContributionData() {
-      // 生成52周的数据
-      return Array(52).fill().map(() => 
-        // 每周7天
-        Array(7).fill().map(() => 
-          // 随机生成0-30的贡献数
-          Math.floor(Math.random() * 30)
-        )
-      )
-    },
-    getContributionColor(count) {
-      if (count === 0) return 'rgba(255, 255, 255, 0.05)'
-      if (count < 5) return this.contributionColors[0]
-      if (count < 10) return this.contributionColors[1]
-      if (count < 15) return this.contributionColors[2]
-      if (count < 20) return this.contributionColors[3]
-      return this.contributionColors[4]
+      ]
     }
   }
 }
@@ -193,37 +99,36 @@ export default {
 
 <style scoped>
 .projects-section {
-  padding: var(--spacing-large) 8%;
-  background: rgba(0, 0, 0, 0.3);
+  padding: 4rem 8%;
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .section-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
-.section-subtitle {
+.section-desc {
   color: var(--color-text-secondary);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .project-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--border-radius-medium);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .project-card:hover {
@@ -237,61 +142,59 @@ export default {
 
 .project-preview img {
   width: 100%;
-  height: 100%;
+  height: 200px;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.project-overlay {
+.project-card:hover .project-preview img {
+  transform: scale(1.05);
+}
+
+.project-links {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.project-overlay.active {
+.project-links.active {
   opacity: 1;
 }
 
-.project-links {
-  display: flex;
-  gap: 1rem;
-}
-
 .project-link {
-  padding: 0.8rem 1.5rem;
-  border-radius: var(--border-radius-small);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
   background: var(--color-primary);
-  color: var(--color-text);
+  color: var(--color-background);
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: transform 0.3s ease;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
 }
 
 .project-link:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px);
 }
 
 .project-info {
   padding: 1.5rem;
 }
 
-.project-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--color-primary);
+.project-info h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
 }
 
-.project-description {
+.project-info p {
   color: var(--color-text-secondary);
+  font-size: 0.95rem;
   margin-bottom: 1rem;
   line-height: 1.6;
 }
@@ -303,128 +206,44 @@ export default {
 }
 
 .tech-tag {
-  padding: 0.3rem 0.8rem;
-  background: rgba(0, 255, 255, 0.1);
-  border-radius: var(--border-radius-small);
-  font-size: 0.9rem;
-}
-
-.tech-tag i {
-  margin-right: 0.5rem;
-}
-
-.projects-showcase {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 2rem;
-  margin-top: 4rem;
-}
-
-.showcase-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-}
-
-.stat-item {
+  padding: 0.25rem 0.75rem;
   background: rgba(255, 255, 255, 0.05);
-  padding: 1.5rem;
-  border-radius: var(--border-radius-small);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--color-primary);
+}
+
+.more-projects {
   text-align: center;
 }
 
-.stat-icon {
-  margin-bottom: 0.5rem;
-}
-
-.stat-icon i {
-  font-size: 24px;
-  color: var(--color-primary);
-}
-
-.stat-value {
-  font-size: 2rem;
-  color: var(--color-primary);
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.stat-label {
-  color: var(--color-text-secondary);
-}
-
-.github-activity {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 1.5rem;
-  border-radius: var(--border-radius-medium);
-}
-
-.contribution-graph {
-  margin-top: 1rem;
-}
-
-.contribution-grid {
-  display: grid;
-  grid-template-columns: repeat(52, 1fr);
-  gap: 3px;
-  margin-bottom: 1rem;
-}
-
-.contribution-week {
-  display: grid;
-  grid-template-rows: repeat(7, 1fr);
-  gap: 3px;
-}
-
-.contribution-day {
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.05);
-  transition: transform 0.2s ease;
-}
-
-.contribution-day:hover {
-  transform: scale(1.2);
-}
-
-.contribution-legend {
-  display: flex;
+.github-link {
+  display: inline-flex;
   align-items: center;
-  justify-content: flex-end;
   gap: 0.5rem;
-  margin-top: 1rem;
-  color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
+  color: var(--color-primary);
+  transition: all 0.3s ease;
 }
 
-.legend-colors {
-  display: flex;
-  gap: 2px;
-}
-
-.legend-color {
-  width: 15px;
-  height: 15px;
-  border-radius: 2px;
+.github-link:hover {
+  background: rgba(0, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
-  .projects-showcase {
+  .projects-section {
+    padding: 3rem 5%;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .projects-grid {
     grid-template-columns: 1fr;
-  }
-
-  .project-links {
-    flex-direction: column;
-  }
-
-  .contribution-grid {
-    gap: 2px;
-  }
-
-  .contribution-day {
-    width: 8px;
-    height: 8px;
   }
 }
 </style> 
