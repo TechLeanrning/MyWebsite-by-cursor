@@ -89,19 +89,19 @@ export default {
         {
           id: 1,
           period: '2022 - 至今',
-          role: '高级前端工程师',
-          company: '字节跳动',
-          description: '负责抖音电商核心业务开发，优化性能提升30%',
-          technologies: ['Vue3', 'TypeScript', 'Vite', '微前端'],
+          role: 'Android系统集成工程师',
+          company: '虹软科技',
+          description: '负责算法sdk的集成在native层以及hal层(高通ISP)的集成和优化,适配手机和AI眼镜平台',
+          technologies: ['C++', 'Android', 'Camera2', 'chi-cdk', 'perfetto'],
           isActive: false
         },
         {
           id: 2,
-          period: '2020 - 2022',
-          role: '前端开发工程师',
-          company: '腾讯',
-          description: '参与企业微信开发，构建高可用组件库',
-          technologies: ['React', 'Node.js', 'Webpack', 'Jest'],
+          period: '2019 - 2022',
+          role: 'C++开发工程师',
+          company: '海康威视',
+          description: '参与codemaster读码平台的开发,在物流读码场景，实现快递录入和分拣的自动化和智能化',
+          technologies: ['C++', 'C#', 'QT'],
           isActive: false
         }
       ]

@@ -4,13 +4,13 @@
       <div class="nav-content">
         <div class="nav-brand">
           <router-link to="/" class="nav-link" @click.native="scrollToTop">
-            <gradient-text>XM</gradient-text>
+            <gradient-text>一鸣Tech</gradient-text>
           </router-link>
         </div>
         <div class="nav-links" :class="{ 'nav-active': isMenuOpen }">
           <router-link to="/" class="nav-link" exact @click.native="scrollToTop">首页</router-link>
           <a @click.prevent="scrollToSection('#projects')" class="nav-link" href="#projects">项目</a>
-          <a @click.prevent="scrollToSection('#skills')" class="nav-link" href="#skills">技术</a>
+          <a @click.prevent="scrollToSection('#skills')" class="nav-link" href="#skills">文章</a>
           <a @click.prevent="scrollToSection('#stats')" class="nav-link" href="#stats">经验</a>
           <a @click.prevent="scrollToSection('#contact')" class="nav-link contact-link" href="#contact">
             <i class="fas fa-paper-plane"></i>
@@ -28,7 +28,7 @@
     <footer class="footer">
       <div class="footer-content">
         <div class="footer-info">
-          <gradient-text>© 2024 小明</gradient-text>
+          <gradient-text>© 2024 一鸣</gradient-text>
           <span class="separator">|</span>
           <a href="https://beian.miit.gov.cn/" target="_blank" class="beian">
             浙ICP备xxxxxxxx号-1

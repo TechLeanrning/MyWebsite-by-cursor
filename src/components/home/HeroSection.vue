@@ -24,15 +24,11 @@
 
     <!-- 内容区域 -->
     <div class="hero-content">
+ 
       <div class="title-group">
-        <div class="intro-badge">
-          <span class="badge-dot"></span>
-          <span class="badge-text">开放远程工作机会</span>
-        </div>
-        
         <h1 class="main-title">
           <span class="greeting">Hi,我是</span>
-          <gradient-text class="name">小明</gradient-text>
+          <gradient-text class="name">一鸣</gradient-text>
         </h1>
         
         <div class="title-desc">
@@ -88,20 +84,20 @@ export default {
       animationFrame: null,
       mainTechnologies: [
         {
-          name: 'Vue.js',
-          icon: 'fab fa-vuejs'
-        },
-        {
-          name: 'React',
-          icon: 'fab fa-react'
-        },
-        {
-          name: 'Node.js',
-          icon: 'fab fa-node-js'
+          name: 'C++',
+          icon: 'fas fa-code'
         },
         {
           name: 'Python',
           icon: 'fab fa-python'
+        },
+        {
+          name: 'Android',
+          icon: 'fab fa-android'
+        },
+        {
+          name: '数字图像处理',
+          icon: 'fas fa-image'
         }
       ],
       currentBg: 0,
@@ -132,8 +128,8 @@ export default {
     // 打字机效果
     new Typed('.typed-text', {
       strings: [
-        '全栈开发工程师',
-        '开源项目贡献者',
+        '安卓系统集成工程师',
+        'AI大模型学习者',
         '技术分享博主'
       ],
       typeSpeed: 50,
@@ -144,8 +140,8 @@ export default {
 
     // 渐显文字效果
     if (this.$refs.bioText) {
-      this.$refs.bioText.innerHTML = '热衷于探索新技术，专注于构建高性能的现代化应用。' +
-        '擅长全栈开发，对技术创新和用户体验有独到见解。'
+      this.$refs.bioText.innerHTML = '热衷于探索新技术，专注于图像处理的学习和应用。' +
+        '擅长C++开发，对新知识新技术有浓厚的兴趣和想法。'
     }
 
     // 启动背景轮播
@@ -277,6 +273,7 @@ export default {
   position: absolute;
   border-radius: 50%;
   filter: blur(60px);
+  opacity: 0.2;
 }
 
 .glow-1 {
@@ -285,7 +282,6 @@ export default {
   width: 50%;
   height: 50%;
   background: var(--gradient-glow-1);
-  opacity: 0.4;
   animation: float 15s ease-in-out infinite;
 }
 
@@ -295,7 +291,6 @@ export default {
   width: 60%;
   height: 60%;
   background: var(--gradient-glow-2);
-  opacity: 0.3;
   animation: float 20s ease-in-out infinite reverse;
 }
 
@@ -307,18 +302,6 @@ export default {
   margin: 0 auto;
 }
 
-.intro-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  background: var(--bg-card);
-  border-radius: var(--border-radius-lg);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-md);
-  animation: fadeInDown 1s ease-out;
-}
 
 .badge-dot {
   width: 8px;
@@ -332,24 +315,74 @@ export default {
   font-size: var(--font-size-3xl);
   line-height: 1.2;
   margin-bottom: var(--spacing-sm);
-  font-weight: var(--font-weight-bold);
+  font-weight: 800;
   animation: fadeInUp 1s ease-out 0.3s both;
+  color: #ffffff;
+}
+
+.greeting {
+  color: #ffffff;
 }
 
 .title-desc {
   font-size: var(--font-size-xl);
-  color: var(--color-text-secondary);
+  color: #ffffff;
   margin-bottom: var(--spacing-md);
-  font-weight: var(--font-weight-medium);
+  font-weight: 600;
 }
 
 .bio-text {
   font-size: var(--font-size-md);
-  color: var(--color-text-secondary);
+  /* 使用渐变色文字 */
+  background: linear-gradient(
+    120deg,
+    #64ffda 0%,
+    #63e6ff 25%,
+    #7c7eff 50%,
+    #63e6ff 75%,
+    #64ffda 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: gradientText 8s linear infinite;
+  
   line-height: 1.8;
   margin-bottom: var(--spacing-lg);
   max-width: 600px;
   min-height: 3.6em;
+  font-weight: 600;
+  text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+  position: relative;
+}
+
+/* 添加炫光效果 */
+.bio-text::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(100, 255, 218, 0.2),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmer 3s infinite;
+}
+
+/* 渐变文字动画 */
+@keyframes gradientText {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* 炫光动画 */
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
 }
 
 /* 技术标签 */
@@ -365,17 +398,18 @@ export default {
   align-items: center;
   gap: var(--spacing-xs);
   padding: var(--spacing-xs) var(--spacing-sm);
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  color: #ffffff;
+  font-weight: 500;
   transition: var(--transition-normal);
 }
 
 .tech-badge:hover {
   transform: translateY(-2px);
-  background: var(--bg-card-hover);
-  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
 }
 
 .tech-badge i {
@@ -396,7 +430,7 @@ export default {
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: 600;
   transition: var(--transition-normal);
 }
 
@@ -406,13 +440,17 @@ export default {
 }
 
 .cta-button.secondary {
-  background: var(--bg-card);
-  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 .cta-button:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+
+.cta-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* 动画效果 */
@@ -494,7 +532,7 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 0;
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 /* 背景轮播样式 */
@@ -519,6 +557,6 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.3) contrast(1.2) saturate(1.1);
+  filter: brightness(0.8) contrast(1.1) saturate(1.1);
 }
 </style>

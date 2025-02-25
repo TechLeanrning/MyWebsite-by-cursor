@@ -12,13 +12,29 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.4",
-    "chart.js": "^4.4.7",
+    "@fortawesome/fontawesome-free": "^6.5.1",
+    "@vue/compat": "^3.4.15",
+    "buffer": "^6.0.3",
+    "chart.js": "^4.4.1",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.9.0",
+    "markdown-it": "^14.0.0",
+    "marked": "^15.0.7",
     "typed.js": "^2.1.0",
-    "vue": "^2.6.14",
-    "vue-router": "^3.5.3"
+    "vue": "^3.4.15",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@vue/cli-service": "^5.0.8"
+    "@vitejs/plugin-vue": "^1.7.1",
+    "@vue/cli-plugin-router": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
+    "@vue/compiler-sfc": "^3.4.15",
+    "markdown-loader": "^8.0.0",
+    "postcss": "^8.4.33",
+    "raw-loader": "^4.0.2"
+  },
+  "resolutions": {
+    "postcss": "^8.4.33",
+    "vue-template-compiler": "^2.7.16"
   }
 }

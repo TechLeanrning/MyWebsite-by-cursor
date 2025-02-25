@@ -1,8 +1,6 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-
-Vue.use(VueRouter)
+import PostDetail from '../views/PostDetail.vue'
 
 const routes = [
   {
@@ -27,24 +25,28 @@ const routes = [
     path: '/contact',
     name: 'Contact',
     component: () => import('../views/Contact.vue')
+  },
+  {
+    path: '/post/:id',
+    name: 'PostDetail',
+    component: PostDetail
   }
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (to.meta.scrollToTop) {
-      return { x: 0, y: 0 }
+      return { top: 0 }
     }
     if (to.hash) {
       return {
-        selector: to.hash,
+        el: to.hash,
         behavior: 'smooth'
       }
     }
-    return savedPosition || { x: 0, y: 0 }
+    return savedPosition || { top: 0 }
   }
 })
 

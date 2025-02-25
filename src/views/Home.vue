@@ -8,7 +8,7 @@
       <div class="section-background">
         <div class="gradient-overlay"></div>
       </div>
-      <TechStack />
+      <BlogPosts />
     </div>
     
     <div class="section projects-section">
@@ -31,7 +31,7 @@
 import { defineComponent } from 'vue'
 import TechBackground from '../components/home/TechBackground.vue'
 import HeroSection from '../components/home/HeroSection.vue'
-import TechStack from '../components/home/TechStack.vue'
+import BlogPosts from '../components/home/BlogPosts.vue'
 import ProjectsPreview from '../components/home/ProjectsPreview.vue'
 import StatsSection from '../components/home/StatsSection.vue'
 
@@ -45,7 +45,7 @@ export default defineComponent({
   components: {
     TechBackground,
     HeroSection,
-    TechStack,
+    BlogPosts,
     ProjectsPreview,
     StatsSection
   }
