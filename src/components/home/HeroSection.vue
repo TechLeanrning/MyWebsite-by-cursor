@@ -55,11 +55,11 @@
           <i class="fas fa-code-branch"></i>
           查看作品
         </a>
-        <a href="https://github.com" target="_blank" class="cta-button secondary">
+        <a href="https://github.com/TechLeanrning" target="_blank" class="cta-button secondary">
           <i class="fab fa-github"></i>
           GitHub
         </a>
-        <a href="https://juejin.cn" target="_blank" class="cta-button secondary">
+        <a href="https://juejin.cn/user/497439491241166" target="_blank" class="cta-button secondary">
           <i class="fas fa-book"></i>
           掘金主页
         </a>
@@ -114,10 +114,10 @@ export default {
           url: '/images/tech-bg-3.jpg',
           alt: '科技背景3'
         },
-        {
-          url: '/images/tech-bg-4.jpg',
-          alt: '科技背景4'
-        }
+        // {
+        //   url: '/images/tech-bg-4.jpg',
+        //   alt: '科技背景4'
+        // }
       ]
     }
   },

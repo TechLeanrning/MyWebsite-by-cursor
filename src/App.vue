@@ -10,12 +10,12 @@
         <div class="nav-links" :class="{ 'nav-active': isMenuOpen }">
           <router-link to="/" class="nav-link" exact @click.native="scrollToTop">首页</router-link>
           <a @click.prevent="scrollToSection('#projects')" class="nav-link" href="#projects">项目</a>
-          <a @click.prevent="scrollToSection('#skills')" class="nav-link" href="#skills">文章</a>
+          <a @click.prevent="scrollToSection('#blog')" class="nav-link" href="#blog">文章</a>
           <a @click.prevent="scrollToSection('#stats')" class="nav-link" href="#stats">经验</a>
-          <a @click.prevent="scrollToSection('#contact')" class="nav-link contact-link" href="#contact">
+          <router-link to="/contact" class="nav-link contact-link">
             <i class="fas fa-paper-plane"></i>
             联系我
-          </a>
+          </router-link>
         </div>
         <button class="menu-toggle" @click="toggleMenu">
           <i class="fas fa-bars"></i>
@@ -28,17 +28,17 @@
     <footer class="footer">
       <div class="footer-content">
         <div class="footer-info">
-          <gradient-text>© 2024 一鸣</gradient-text>
+          <gradient-text>© 2025 一鸣</gradient-text>
           <span class="separator">|</span>
           <a href="https://beian.miit.gov.cn/" target="_blank" class="beian">
             浙ICP备xxxxxxxx号-1
           </a>
         </div>
         <div class="social-links">
-          <a href="https://github.com" target="_blank" class="social-link">
+          <a href="https://github.com/TechLeanrning" target="_blank" class="social-link">
             <i class="fab fa-github"></i>
           </a>
-          <a href="https://juejin.cn" target="_blank" class="social-link">
+          <a href="https://juejin.cn/user/497439491241166" target="_blank" class="social-link">
             掘
           </a>
         </div>
@@ -80,10 +80,13 @@ export default {
         behavior: 'smooth'
       })
     },
-    scrollToSection(hash) {
-      const element = document.querySelector(hash)
+    scrollToSection(selector) {
+      const element = document.querySelector(selector)
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        })
       }
     }
   }

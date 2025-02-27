@@ -65,11 +65,38 @@
         </article>
       </div>
 
-      <!-- 加载更多按钮 -->
-      <div class="load-more" v-if="hasMorePosts">
-        <button class="load-more-btn" @click="loadMorePosts">
-          加载更多
-          <i class="fas fa-chevron-down"></i>
+      <!-- 替换加载更多按钮为分页组件 -->
+      <div class="pagination">
+        <button 
+          class="page-btn prev" 
+          :disabled="currentPage === 1"
+          @click="changePage(currentPage - 1)">
+          <span class="btn-content">
+            <i class="fas fa-chevron-left"></i>
+            上一页
+          </span>
+        </button>
+        
+        <div class="page-numbers">
+          <button 
+            v-for="page in totalPages" 
+            :key="page"
+            :class="['page-number', { active: page === currentPage }]"
+            @click="changePage(page)">
+            <span class="number-content">
+              {{ page }}
+            </span>
+          </button>
+        </div>
+        
+        <button 
+          class="page-btn next"
+          :disabled="currentPage === totalPages"
+          @click="changePage(currentPage + 1)">
+          <span class="btn-content">
+            下一页
+            <i class="fas fa-chevron-right"></i>
+          </span>
         </button>
       </div>
     </div>
@@ -123,7 +150,7 @@ export default {
       posts: [],
       error: null,
       currentCategory: '全部',
-      categories: ['全部', 'Android', '图像处理', 'C++', 'AI', '其他'],
+      categories: ['全部', '高通camera', 'AI', 'perfetto', '其他'],
       currentPage: 1,
       postsPerPage: 6,
       selectedPost: null
@@ -131,18 +158,24 @@ export default {
   },
   computed: {
     filteredPosts() {
-      if (this.currentCategory === '全部') {
-        return this.posts.slice(0, this.currentPage * this.postsPerPage)
-      }
-      return this.posts
-        .filter(post => post.category === this.currentCategory)
-        .slice(0, this.currentPage * this.postsPerPage)
+      const filtered = this.currentCategory === '全部'
+        ? this.posts
+        : this.posts.filter(post => post.category === this.currentCategory)
+      
+      const start = (this.currentPage - 1) * this.postsPerPage
+      const end = start + this.postsPerPage
+      
+      return filtered.slice(start, end)
     },
-    hasMorePosts() {
-      const filteredLength = this.currentCategory === '全部' 
-        ? this.posts.length 
+    
+    totalPosts() {
+      return this.currentCategory === '全部'
+        ? this.posts.length
         : this.posts.filter(post => post.category === this.currentCategory).length
-      return filteredLength > this.currentPage * this.postsPerPage
+    },
+    
+    totalPages() {
+      return Math.ceil(this.totalPosts / this.postsPerPage)
     },
     renderedContent() {
       return this.selectedPost ? marked(this.selectedPost.content) : ''
@@ -157,12 +190,17 @@ export default {
     }
   },
   methods: {
+    changePage(page) {
+      this.currentPage = page
+      // 滚动到博客区域顶部
+      const blogSection = document.getElementById('blog')
+      if (blogSection) {
+        blogSection.scrollIntoView({ behavior: 'smooth' })
+      }
+    },
     filterByCategory(category) {
       this.currentCategory = category
-      this.currentPage = 1
-    },
-    loadMorePosts() {
-      this.currentPage++
+      this.currentPage = 1  // 切换分类时重置页码
     },
     formatDate(date) {
       return new Date(date).toLocaleDateString('zh-CN', {
@@ -224,16 +262,17 @@ export default {
 
 .category-tag {
   padding: 0.75rem 1.5rem;
-  border-radius: 25px;
   background: rgba(255, 255, 255, 0.05);
-  color: var(--color-text);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: flex;
+  color: var(--color-text);
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 0.95rem;
+  white-space: nowrap;
 }
 
 .category-tag i {
@@ -242,8 +281,7 @@ export default {
 }
 
 .category-tag:hover {
-  background: rgba(var(--color-primary-rgb), 0.1);
-  border-color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .category-tag.active {
@@ -397,30 +435,76 @@ export default {
   font-size: 0.75rem;
 }
 
-/* 加载更多按钮 */
-.load-more {
-  text-align: center;
-  margin-top: 2rem;
+/* 分页组件样式 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
 }
 
-.load-more-btn {
-  padding: 0.75rem 2rem;
+.page-btn {
+  padding: 0;  /* 移除内边距 */
   background: transparent;
-  border: 2px solid var(--color-primary);
+  border: 1px solid var(--color-primary);
   color: var(--color-primary);
-  border-radius: 25px;
+  border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 1rem;
 }
 
-.load-more-btn:hover {
+.btn-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.5rem;  /* 将内边距移到内容容器 */
+  width: 100%;
+  height: 100%;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-btn:not(:disabled):hover {
   background: var(--color-primary);
   color: var(--color-background);
-  transform: translateY(-2px);
+}
+
+.page-numbers {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.page-number {
+  padding: 0;  /* 移除内边距 */
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.number-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.page-number:hover {
+  border-color: var(--color-primary);
+}
+
+.page-number.active {
+  background: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
 }
 
 @media (max-width: 768px) {
@@ -439,6 +523,20 @@ export default {
   .post-meta {
     flex-direction: column;
     gap: 0.75rem;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .page-numbers {
+    order: -1;
+  }
+  
+  .page-btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 

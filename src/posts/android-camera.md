@@ -1,6 +1,6 @@
 ---
 title: Android Camera2 架构详解
-date: 2024-01-15
+date: 2025-02-15
 category: Android
 tags: ['Camera2', 'HAL', 'Android Framework']
 excerpt: 深入解析 Android Camera2 的架构设计和工作原理
