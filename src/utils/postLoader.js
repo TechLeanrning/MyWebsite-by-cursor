@@ -5,63 +5,29 @@ export async function loadPosts() {
   try {
     const posts = []
     
-    // 确保路径正确
-    let markdownFiles
-    try {
-      markdownFiles = require.context('../posts', false, /\.md$/)
-      console.log('Looking in ../posts:', markdownFiles.keys())
-    } catch (e) {
-      console.error('Error loading context:', e)
-      return []
-    }
+    // 从服务器获取文章列表
+    const response = await fetch('/posts/index.json')
+    const data = await response.json()
+    const postList = data.posts  // 获取 posts 数组
     
-    if (!markdownFiles.keys().length) {
-      console.warn('No markdown files found')
-      return []
-    }
-
-    for (const key of markdownFiles.keys()) {
+    // 加载每篇文章的内容
+    for (const postInfo of postList) {
       try {
-        const fileName = key.replace('./', '').replace('.md', '')
-        console.log('Processing file:', fileName)
-        let fileContent = markdownFiles(key)
-        
-        // 处理 raw-loader 返回的内容
-        if (typeof fileContent === 'object' && fileContent.__esModule) {
-          fileContent = fileContent.default
-        }
-        
-        if (!fileContent || typeof fileContent !== 'string') {
-          console.error(`Invalid content for file: ${key}`, typeof fileContent)
-          continue
-        }
-        
-        console.log('File content type:', typeof fileContent)
-        console.log('File content preview:', fileContent.substring(0, 100))
-        
-        const { data, content } = matter(fileContent)
-        console.log('Parsed frontmatter:', data)
+        const contentResponse = await fetch(`/posts/${postInfo.id}.md`)
+        const content = await contentResponse.text()
         
         posts.push({
-          id: fileName,
-          title: data.title || 'Untitled',
-          date: data.date || new Date(),
-          category: data.category || 'Uncategorized',
-          tags: data.tags || [],
-          excerpt: data.excerpt || '',
-          coverImage: data.coverImage || '/images/posts/default.jpg',
-          readTime: calculateReadTime(content),
+          ...postInfo,
           content
         })
       } catch (error) {
-        console.error(`Error processing ${key}:`, error)
+        console.error(`Error loading post ${postInfo.id}:`, error)
       }
     }
 
-    console.log('Successfully loaded posts:', posts)
     return posts.sort((a, b) => new Date(b.date) - new Date(a.date))
   } catch (error) {
-    console.error('Error in loadPosts:', error)
+    console.error('Error loading posts:', error)
     return []
   }
 }

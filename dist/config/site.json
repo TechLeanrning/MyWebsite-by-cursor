@@ -1,0 +1,19 @@
+{
+  "social": {
+    "github": "https://github.com/TechLeanrning",
+    "juejin": "https://juejin.cn/user/497439491241166",
+    "blog": "https://blog.csdn.net/your-blog"
+  },
+  "projects": [
+    {
+      "id": 1,
+      "name": "个人博客系统",
+      "description": "基于 Vue3 开发的现代化博客系统，支持 Markdown 编辑和实时预览",
+      "image": "/images/projects/blog.jpg",
+      "technologies": ["Vue3", "Node.js", "Markdown"],
+      "link": "https://github.com/TechLeanrning/tech-blog",
+      "blogPost": "https://juejin.cn/post/your-post-id",
+      "isHovered": false
+    }
+  ]
+} 

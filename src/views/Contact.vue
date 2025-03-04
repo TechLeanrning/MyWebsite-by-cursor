@@ -12,8 +12,8 @@
         <div class="info-card">
           <i class="fas fa-envelope"></i>
           <h3>邮箱</h3>
-          <p>2027671609@qq.com</p>
-          <button class="copy-btn" @click="copyToClipboard('2027671609@qq.com')">
+          <p>zhuyiming023@gmail.com</p>
+          <button class="copy-btn" @click="copyToClipboard('zhuyiming023@gmail.com')">
             复制邮箱
           </button>
         </div>
@@ -58,7 +58,11 @@
             id="email" 
             v-model="form.email"
             required
+            :class="{ 'invalid': showErrors && !validateEmail(form.email) }"
             placeholder="请输入您的邮箱">
+          <span class="error-message" v-if="showErrors && !validateEmail(form.email)">
+            请输入有效的邮箱地址
+          </span>
         </div>
 
         <div class="form-group">
@@ -99,6 +103,7 @@
 
 <script>
 import GradientText from '@/components/common/GradientText.vue'
+import emailjs from '@emailjs/browser'
 
 export default {
   name: 'Contact',
@@ -118,7 +123,13 @@ export default {
         show: false,
         message: '',
         type: 'success'
-      }
+      },
+      emailjsConfig: {
+        serviceId: '',
+        templateId: '',
+        publicKey: ''
+      },
+      showErrors: false
     }
   },
   methods: {
@@ -126,16 +137,55 @@ export default {
       this.submitting = true
       
       try {
-        // 这里添加发送表单的逻辑
-        await new Promise(resolve => setTimeout(resolve, 1000)) // 模拟API调用
+        // 验证表单
+        if (!this.validateForm()) {
+          throw new Error('请填写所有必填字段')
+        }
+
+        // 准备发送的数据
+        const templateParams = {
+          from_name: this.form.name,
+          from_email: this.form.email,
+          subject: this.form.subject,
+          message: this.form.message,
+          to_name: '一鸣Tech',
+          reply_to: this.form.email
+        }
+
+        // 发送邮件
+        await emailjs.send(
+          this.emailjsConfig.serviceId,
+          this.emailjsConfig.templateId,
+          templateParams,
+          this.emailjsConfig.publicKey
+        )
         
         this.showNotification('消息发送成功！', 'success')
         this.resetForm()
       } catch (error) {
-        this.showNotification('发送失败，请稍后重试', 'error')
+        console.error('发送失败:', error)
+        this.showNotification(
+          error.message || '发送失败，请稍后重试', 
+          'error'
+        )
       } finally {
         this.submitting = false
       }
+    },
+    
+    validateForm() {
+      return (
+        this.form.name.trim() && 
+        this.form.email.trim() && 
+        this.form.subject.trim() && 
+        this.form.message.trim() &&
+        this.validateEmail(this.form.email)
+      )
+    },
+    
+    validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      return re.test(email)
     },
     
     resetForm() {
@@ -154,18 +204,30 @@ export default {
         type
       }
       
+      // 3秒后自动关闭通知
       setTimeout(() => {
         this.notification.show = false
       }, 3000)
     },
     
-    async copyToClipboard(text) {
-      try {
-        await navigator.clipboard.writeText(text)
-        this.showNotification('复制成功！')
-      } catch (err) {
-        this.showNotification('复制失败，请手动复制', 'error')
-      }
+    copyToClipboard(text) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          this.showNotification('复制成功！')
+        })
+        .catch(() => {
+          this.showNotification('复制失败，请手动复制', 'error')
+        })
+    }
+  },
+  async created() {
+    try {
+      // 加载配置
+      const response = await fetch('/config/email.json')
+      const config = await response.json()
+      this.emailjsConfig = config.emailjs
+    } catch (error) {
+      console.error('Failed to load email config:', error)
     }
   }
 }
@@ -380,5 +442,15 @@ export default {
   .info-card {
     padding: 1.5rem;
   }
+}
+
+.invalid {
+  border-color: var(--color-error) !important;
+}
+
+.error-message {
+  color: var(--color-error);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
 }
 </style> 

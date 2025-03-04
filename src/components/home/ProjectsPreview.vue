@@ -14,15 +14,21 @@
            @mouseenter="project.isHovered = true"
            @mouseleave="project.isHovered = false">
         <div class="project-preview">
-          <img :src="project.image" :alt="project.name">
+          <img :src="project.image || defaultImage" :alt="project.name">
           <div class="project-links" :class="{ active: project.isHovered }">
-            <a :href="project.demo" target="_blank" class="project-link">
+            <a :href="project.link || '#'" 
+               target="_blank" 
+               class="project-link"
+               :class="{ disabled: !project.link }">
               <i class="fas fa-external-link-alt"></i>
-              预览
+              查看项目
             </a>
-            <a :href="project.github" target="_blank" class="project-link">
-              <i class="fab fa-github"></i>
-              源码
+            <a :href="project.blogPost || '#'" 
+               target="_blank" 
+               class="project-link blog"
+               :class="{ disabled: !project.blogPost }">
+              <i class="fas fa-book"></i>
+              相关文章
             </a>
           </div>
         </div>
@@ -60,35 +66,42 @@ export default {
   },
   data() {
     return {
-      projects: [
+      config: null,
+      projects: [],
+      defaultImage: '/images/projects/default.jpg'
+    }
+  },
+  async created() {
+    try {
+      // 加载配置文件
+      const response = await fetch('/config/site.json')
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      this.config = await response.json()
+      
+      // 确保项目数据格式正确
+      if (Array.isArray(this.config.projects)) {
+        this.projects = this.config.projects.map(project => ({
+          ...project,
+          image: project.image || this.defaultImage,
+          isHovered: false
+        }))
+      } else {
+        console.error('Projects data is not an array:', this.config.projects)
+      }
+    } catch (error) {
+      console.error('Error loading site config:', error)
+      // 使用默认项目数据
+      this.projects = [
         {
           id: 1,
-          name: '个人博客系统',
-          description: '基于 Vue3 + TypeScript 开发的现代化博客系统，支持 Markdown 编辑和实时预览',
-          image: 'https://via.placeholder.com/600x340',
-          technologies: ['Vue3', 'TypeScript', 'Vite', 'TailwindCSS'],
-          demo: 'https://demo.example.com',
-          github: 'https://github.com/example/blog',
-          isHovered: false
-        },
-        {
-          id: 2,
-          name: '在线代码编辑器',
-          description: '支持多种编程语言的在线 IDE，集成代码高亮和实时运行功能',
-          image: 'https://via.placeholder.com/600x340',
-          technologies: ['React', 'Monaco Editor', 'WebAssembly', 'Node.js'],
-          demo: 'https://demo.example.com',
-          github: 'https://github.com/example/code-editor',
-          isHovered: false
-        },
-        {
-          id: 3,
-          name: '智能聊天机器人',
-          description: '基于 GPT-3 API 开发的智能对话系统，支持多轮对话和上下文理解',
-          image: 'https://via.placeholder.com/600x340',
-          technologies: ['Vue.js', 'OpenAI API', 'Express', 'Socket.io'],
-          demo: 'https://demo.example.com',
-          github: 'https://github.com/example/chatbot',
+          name: "示例项目",
+          description: "这是一个示例项目",
+          image: this.defaultImage,
+          technologies: ["Vue", "Node.js"],
+          link: "#",
+          blogPost: "#",
           isHovered: false
         }
       ]
@@ -181,6 +194,12 @@ export default {
 
 .project-link:hover {
   transform: translateY(-2px);
+}
+
+.project-link.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .project-info {

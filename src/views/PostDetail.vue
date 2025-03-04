@@ -88,11 +88,15 @@ export default {
       console.log('PostDetail created, id:', this.$route.params.id)
       const posts = await loadPosts()
       console.log('Loaded posts:', posts)
-      this.post = posts.find(p => p.id === this.$route.params.id)
-      console.log('Found post:', this.post)
+      
+      // 确保 ID 匹配
+      const postId = this.$route.params.id
+      this.post = posts.find(p => p.id === postId)
       
       if (!this.post) {
-        console.error('Post not found:', this.$route.params.id)
+        console.error('Post not found:', postId)
+        // 可以添加错误处理，比如显示404页面
+        this.$router.push('/404')
       }
     } catch (error) {
       console.error('Error loading post:', error)

@@ -122,7 +122,6 @@ export default {
     }
   },
   mounted() {
-    // 初始化 Canvas
     this.initCanvas()
     
     // 打字机效果
@@ -147,13 +146,11 @@ export default {
     // 启动背景轮播
     this.startBackgroundSlideshow()
   },
-  beforeDestroy() {
-    // 清理动画
+  beforeUnmount() {
     if (this.animationFrame) {
       cancelAnimationFrame(this.animationFrame)
     }
     
-    // 清理背景轮播定时器
     if (this.slideshowTimer) {
       clearInterval(this.slideshowTimer)
     }

@@ -28,7 +28,7 @@
           class="post-card"
           @click="openPost(post)">
           <div class="post-image">
-            <img :src="post.coverImage" :alt="post.title">
+            <img :src="post.coverImage || defaultImage" :alt="post.title">
             <div class="post-overlay">
               <div class="post-category">{{ post.category }}</div>
               <span class="read-more">
@@ -147,10 +147,11 @@ export default {
   },
   data() {
     return {
+      defaultImage: '/images/posts/default.jpg',
       posts: [],
       error: null,
       currentCategory: '全部',
-      categories: ['全部', '高通camera', 'AI', 'perfetto', '其他'],
+      categories: ['全部', 'Android', 'perfetto', 'AI', '其他'],
       currentPage: 1,
       postsPerPage: 6,
       selectedPost: null
@@ -210,19 +211,9 @@ export default {
       })
     },
     openPost(post) {
-      // 先滚动到博客区域
-      const blogSection = document.getElementById('blog')
-      if (blogSection) {
-        blogSection.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        })
-      }
-
-      // 然后使用路由导航到文章详情页
-      setTimeout(() => {
-        this.$router.push(`/post/${post.id}`)
-      }, 500)  // 等待滚动完成后再跳转
+      // 使用编程式导航并打印日志
+      console.log('Opening post:', post.id)
+      this.$router.push(`/post/${post.id}`)
     }
   }
 }
