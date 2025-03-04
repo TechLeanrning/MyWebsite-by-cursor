@@ -14,6 +14,26 @@
       "link": "https://github.com/TechLeanrning/tech-blog",
       "blogPost": "https://juejin.cn/post/your-post-id",
       "isHovered": false
+    },
+    {
+      "id": 2,
+      "name": "Android Camera HAL",
+      "description": "高通平台 Camera HAL3 实现，支持多摄像头和AI场景识别，优化了图像处理性能",
+      "image": "/images/projects/camera.jpg",
+      "technologies": ["C++", "Android", "Camera HAL"],
+      "link": "https://github.com/TechLeanrning/android-camera",
+      "blogPost": "https://juejin.cn/post/camera-hal",
+      "isHovered": false
+    },
+    {
+      "id": 3,
+      "name": "性能分析工具",
+      "description": "基于 Perfetto 的性能分析工具，支持 CPU、内存、系统调用等指标追踪和可视化",
+      "image": "/images/projects/perfetto.jpg",
+      "technologies": ["C++", "Perfetto", "性能优化"],
+      "link": "https://github.com/TechLeanrning/perf-tools",
+      "blogPost": "https://juejin.cn/post/perfetto-trace",
+      "isHovered": false
     }
   ]
 } 

@@ -7,15 +7,35 @@
       <p class="section-desc">我的一些开源项目和作品</p>
     </div>
 
-    <div class="projects-grid">
-      <div v-for="project in projects" 
-           :key="project.id" 
-           class="project-card"
-           @mouseenter="project.isHovered = true"
-           @mouseleave="project.isHovered = false">
-        <div class="project-preview">
-          <img :src="project.image || defaultImage" :alt="project.name">
-          <div class="project-links" :class="{ active: project.isHovered }">
+    <div class="projects-container">
+      <!-- 项目列表 -->
+      <div class="projects-grid">
+        <div v-for="project in displayedProjects" 
+             :key="project.id" 
+             class="project-card"
+             :style="project.style">
+          <div class="project-content">
+            <!-- 左侧项目信息 -->
+            <div class="project-info">
+              <div class="project-type">
+                <i class="fas fa-code-branch"></i>
+                开源项目
+              </div>
+              <h3>{{ project.name }}</h3>
+              <p>{{ project.description }}</p>
+              <div class="project-tech">
+                <span v-for="tech in project.technologies" 
+                      :key="tech"
+                      class="tech-tag">
+                  <i class="fas fa-code"></i>
+                  {{ tech }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 项目链接 -->
+          <div class="project-actions">
             <a :href="project.link || '#'" 
                target="_blank" 
                class="project-link"
@@ -32,18 +52,41 @@
             </a>
           </div>
         </div>
+      </div>
+
+      <!-- 分页控件 -->
+      <div class="pagination" v-if="totalPages > 1">
+        <button 
+          class="page-btn prev" 
+          :disabled="currentPage === 1"
+          @click="changePage(currentPage - 1)">
+          <span class="btn-content">
+            <i class="fas fa-chevron-left"></i>
+            上一页
+          </span>
+        </button>
         
-        <div class="project-info">
-          <h3>{{ project.name }}</h3>
-          <p>{{ project.description }}</p>
-          <div class="project-tech">
-            <span v-for="tech in project.technologies" 
-                  :key="tech"
-                  class="tech-tag">
-              {{ tech }}
+        <div class="page-numbers">
+          <button 
+            v-for="page in totalPages" 
+            :key="page"
+            :class="['page-number', { active: page === currentPage }]"
+            @click="changePage(page)">
+            <span class="number-content">
+              {{ page }}
             </span>
-          </div>
+          </button>
         </div>
+        
+        <button 
+          class="page-btn next"
+          :disabled="currentPage === totalPages"
+          @click="changePage(currentPage + 1)">
+          <span class="btn-content">
+            下一页
+            <i class="fas fa-chevron-right"></i>
+          </span>
+        </button>
       </div>
     </div>
 
@@ -68,7 +111,19 @@ export default {
     return {
       config: null,
       projects: [],
-      defaultImage: '/images/projects/default.jpg'
+      defaultImage: '/images/projects/default.jpg',
+      currentPage: 1,
+      projectsPerPage: 4
+    }
+  },
+  computed: {
+    displayedProjects() {
+      const start = (this.currentPage - 1) * this.projectsPerPage
+      const end = start + this.projectsPerPage
+      return this.projects.slice(start, end)
+    },
+    totalPages() {
+      return Math.ceil(this.projects.length / this.projectsPerPage)
     }
   },
   async created() {
@@ -84,8 +139,10 @@ export default {
       if (Array.isArray(this.config.projects)) {
         this.projects = this.config.projects.map(project => ({
           ...project,
-          image: project.image || this.defaultImage,
-          isHovered: false
+          isHovered: false,
+          style: project.image ? {
+            backgroundImage: `url(${project.image})`
+          } : null
         }))
       } else {
         console.error('Projects data is not an array:', this.config.projects)
@@ -98,13 +155,23 @@ export default {
           id: 1,
           name: "示例项目",
           description: "这是一个示例项目",
-          image: this.defaultImage,
           technologies: ["Vue", "Node.js"],
           link: "#",
           blogPost: "#",
-          isHovered: false
+          isHovered: false,
+          style: null
         }
       ]
+    }
+  },
+  methods: {
+    changePage(page) {
+      this.currentPage = page
+      // 滚动到项目区域顶部
+      const projectsSection = document.getElementById('projects')
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: 'smooth' })
+      }
     }
   }
 }
@@ -130,66 +197,116 @@ export default {
   font-size: 1.1rem;
 }
 
+.projects-container {
+  position: relative;
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 1.5rem;
   margin-bottom: 3rem;
 }
 
 .project-card {
-  background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
-}
-
-.project-card:hover {
-  transform: translateY(-5px);
-}
-
-.project-preview {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
   position: relative;
-  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.project-preview img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
+.project-content {
+  padding: 1.5rem;
+  flex: 1;
+  position: relative;
+  z-index: 1;
 }
 
-.project-card:hover .project-preview img {
-  transform: scale(1.05);
+.project-info {
+  flex: 1;
 }
 
-.project-links {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
+.project-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--color-primary);
+  border-radius: 20px;
+}
+
+.project-info h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.project-info p {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--color-primary);
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  gap: 0.5rem;
+  border: 1px solid var(--color-primary);
 }
 
-.project-links.active {
-  opacity: 1;
+.tech-tag i {
+  font-size: 0.8em;
+}
+
+.project-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .project-link {
+  flex: 1;
   padding: 0.5rem 1rem;
   border-radius: 6px;
   background: var(--color-primary);
   color: var(--color-background);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   font-size: 0.9rem;
   transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.project-link.blog {
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
 }
 
 .project-link:hover {
@@ -200,36 +317,6 @@ export default {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
-}
-
-.project-info {
-  padding: 1.5rem;
-}
-
-.project-info h3 {
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
-}
-
-.project-info p {
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-
-.project-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.tech-tag {
-  padding: 0.25rem 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  font-size: 0.85rem;
-  color: var(--color-primary);
 }
 
 .more-projects {
@@ -252,6 +339,59 @@ export default {
   transform: translateY(-2px);
 }
 
+/* 分页样式 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.page-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-primary);
+  transition: all 0.3s ease;
+}
+
+.page-btn:hover {
+  background: var(--color-primary);
+  color: var(--color-background);
+}
+
+.page-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.page-number {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-primary);
+  transition: all 0.3s ease;
+}
+
+.page-number:hover {
+  background: var(--color-primary);
+  color: var(--color-background);
+}
+
+.page-number.active {
+  background: var(--color-primary);
+  color: var(--color-background);
+}
+
 @media (max-width: 768px) {
   .projects-section {
     padding: 3rem 5%;
@@ -263,6 +403,17 @@ export default {
 
   .projects-grid {
     grid-template-columns: 1fr;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .project-content {
+    padding: 1.5rem;
+  }
+
+  .project-actions {
+    padding: 1.5rem;
   }
 }
 </style> 
