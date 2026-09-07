@@ -3,7 +3,14 @@
     <div class="section hero-section" id="hero">
       <HeroSection />
     </div>
-    
+
+    <div class="section services-section">
+      <div class="section-background">
+        <div class="gradient-overlay"></div>
+      </div>
+      <ServicesPreview />
+    </div>
+
     <div class="section tech-section">
       <div class="section-background">
         <div class="gradient-overlay"></div>
@@ -31,6 +38,7 @@
 import { defineComponent } from 'vue'
 import TechBackground from '../components/home/TechBackground.vue'
 import HeroSection from '../components/home/HeroSection.vue'
+import ServicesPreview from '../components/home/ServicesPreview.vue'
 import BlogPosts from '../components/home/BlogPosts.vue'
 import ProjectsPreview from '../components/home/ProjectsPreview.vue'
 import StatsSection from '../components/home/StatsSection.vue'
@@ -45,6 +53,7 @@ export default defineComponent({
   components: {
     TechBackground,
     HeroSection,
+    ServicesPreview,
     BlogPosts,
     ProjectsPreview,
     StatsSection
@@ -94,6 +103,20 @@ export default defineComponent({
   background: radial-gradient(
     circle at 70% 30%,
     rgba(255, 107, 107, 0.06) 0%,
+    transparent 70%
+  );
+}
+
+/* Services Section - 温暖信任感 */
+.services-section {
+  --section-bg: var(--section-services-bg);
+  background: var(--section-bg);
+}
+
+.services-section .section-background {
+  background: radial-gradient(
+    circle at 30% 40%,
+    rgba(245, 158, 11, 0.06) 0%,
     transparent 70%
   );
 }

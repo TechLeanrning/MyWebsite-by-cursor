@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e3a5f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <circle cx="680" cy="80" r="140" fill="#38bdf8" opacity="0.08"/>
+  <circle cx="120" cy="440" r="180" fill="#818cf8" opacity="0.08"/>
+  <g transform="translate(400, 210)" text-anchor="middle">
+    <text font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="64" font-weight="700" fill="url(#accent)">MyCrayfish</text>
+    <text y="56" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="26" fill="#f8fafc" opacity="0.85">AI 办公助手平台</text>
+  </g>
+  <g transform="translate(400, 330)" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" fill="#f8fafc" opacity="0.55">
+    <text>AnythingLLM RAG · UI-TARS · office-agent 网关</text>
+  </g>
+</svg>

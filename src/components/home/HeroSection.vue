@@ -51,17 +51,17 @@
       </div>
 
       <div class="cta-group">
-        <a href="#projects" class="cta-button primary">
+        <router-link to="/services" class="cta-button primary">
+          <i class="fas fa-robot"></i>
+          了解 AI 服务
+        </router-link>
+        <a href="#projects" class="cta-button secondary">
           <i class="fas fa-code-branch"></i>
           查看作品
         </a>
         <a href="https://github.com/TechLeanrning" target="_blank" class="cta-button secondary">
           <i class="fab fa-github"></i>
           GitHub
-        </a>
-        <a href="https://juejin.cn/user/497439491241166" target="_blank" class="cta-button secondary">
-          <i class="fas fa-book"></i>
-          掘金主页
         </a>
       </div>
     </div>
@@ -88,16 +88,20 @@ export default {
           icon: 'fas fa-code'
         },
         {
-          name: 'Python',
-          icon: 'fab fa-python'
-        },
-        {
           name: 'Android',
           icon: 'fab fa-android'
         },
         {
-          name: '数字图像处理',
-          icon: 'fas fa-image'
+          name: 'WeKnora / RAG',
+          icon: 'fas fa-brain'
+        },
+        {
+          name: 'Docker',
+          icon: 'fab fa-docker'
+        },
+        {
+          name: 'AI 基础设施',
+          icon: 'fas fa-server'
         }
       ],
       currentBg: 0,
@@ -127,8 +131,8 @@ export default {
     // 打字机效果
     new Typed('.typed-text', {
       strings: [
+        'AI 知识库实战者',
         '安卓系统集成工程师',
-        'AI大模型学习者',
         '技术分享博主'
       ],
       typeSpeed: 50,
@@ -139,8 +143,8 @@ export default {
 
     // 渐显文字效果
     if (this.$refs.bioText) {
-      this.$refs.bioText.innerHTML = '热衷于探索新技术，专注于图像处理的学习和应用。' +
-        '擅长C++开发，对新知识新技术有浓厚的兴趣和想法。'
+      this.$refs.bioText.innerHTML = '热衷于探索新技术，专注 AI 知识库的落地实践：' +
+        '从 WeKnora 私有化部署到自托管 AI 基础设施，让知识真正为你所用。'
     }
 
     // 启动背景轮播

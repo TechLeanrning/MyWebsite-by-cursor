@@ -14,11 +14,14 @@ export async function loadPosts() {
     for (const postInfo of postList) {
       try {
         const contentResponse = await fetch(`/posts/${postInfo.id}.md`)
-        const content = await contentResponse.text()
-        
+        const raw = await contentResponse.text()
+
+        // 剥离 frontmatter，避免元数据被当作正文渲染
+        const parsed = matter(raw)
         posts.push({
           ...postInfo,
-          content
+          ...parsed.data,
+          content: parsed.content
         })
       } catch (error) {
         console.error(`Error loading post ${postInfo.id}:`, error)

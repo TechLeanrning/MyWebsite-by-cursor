@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1a2b"/>
+      <stop offset="100%" stop-color="#123047"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <circle cx="700" cy="90" r="130" fill="#38bdf8" opacity="0.08"/>
+  <circle cx="100" cy="430" r="160" fill="#818cf8" opacity="0.08"/>
+  <g transform="translate(400, 205)" text-anchor="middle">
+    <text font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="40" font-weight="700" fill="url(#accent)">WeKnora 私有部署实战</text>
+    <text y="52" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="24" fill="#f8fafc" opacity="0.85">从裸机到微信问答 0.7 秒响应</text>
+  </g>
+  <g transform="translate(400, 325)" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" fill="#f8fafc" opacity="0.55">
+    <text>Docker · frp · Nginx HTTPS · RAG 调优</text>
+  </g>
+</svg>

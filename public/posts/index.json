@@ -1,6 +1,26 @@
 {
   "posts": [
     {
+      "id": "infra-gateway",
+      "title": "new-api 模型网关 + 家宽服务器：我的自托管 AI 基础设施",
+      "date": "2026-09-05",
+      "category": "AI",
+      "tags": ["new-api", "frp", "Nginx", "自托管"],
+      "excerpt": "家宽服务器 + 阿里云反代 + frp 隧道 + new-api 模型网关：一套把 27 个国产模型和私有知识库跑在自己手里的基础设施，记录选型思路、配置要点和踩坑。",
+      "coverImage": "/images/posts/infra-gateway.svg",
+      "readTime": 10
+    },
+    {
+      "id": "weknora-deploy",
+      "title": "WeKnora 私有部署实战：从裸机到微信问答 0.7 秒响应",
+      "date": "2026-08-24",
+      "category": "AI",
+      "tags": ["WeKnora", "RAG", "Docker", "部署"],
+      "excerpt": "把 WeKnora 知识库完整跑在自己的服务器上：Docker 编排、模型接入、frp 内网穿透、HTTPS 反代，最后接上微信渠道实现随时随地向知识库提问。记录完整链路与踩坑。",
+      "coverImage": "/images/posts/weknora-deploy.svg",
+      "readTime": 12
+    },
+    {
       "id": "android-camera",
       "title": "Android Camera HAL 架构详解",
       "date": "2024-03-20",
@@ -11,4 +31,4 @@
       "readTime": 15
     }
   ]
-} 
+}

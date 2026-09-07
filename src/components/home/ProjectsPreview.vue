@@ -91,7 +91,7 @@
     </div>
 
     <div class="more-projects">
-      <a href="https://github.com/yourusername" target="_blank" class="github-link">
+      <a href="https://github.com/TechLeanrning" target="_blank" class="github-link">
         <i class="fab fa-github"></i>
         在 GitHub 上查看更多项目
       </a>

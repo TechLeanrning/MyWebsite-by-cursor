@@ -8,7 +8,8 @@
           </router-link>
         </div>
         <div class="nav-links" :class="{ 'nav-active': isMenuOpen }">
-          <router-link to="/" class="nav-link" exact @click.native="scrollToTop">首页</router-link>
+          <router-link to="/" class="nav-link" exact @click="onNavClick">首页</router-link>
+          <router-link to="/services" class="nav-link" @click="closeMenu">AI 服务</router-link>
           <a @click.prevent="scrollToSection('#projects')" class="nav-link" href="#projects">项目</a>
           <a @click.prevent="scrollToSection('#blog')" class="nav-link" href="#blog">文章</a>
           <a @click.prevent="scrollToSection('#stats')" class="nav-link" href="#stats">经验</a>
@@ -28,7 +29,7 @@
     <footer class="footer">
       <div class="footer-content">
         <div class="footer-info">
-          <gradient-text>© 2025 一鸣</gradient-text>
+          <gradient-text>© 2026 一鸣</gradient-text>
           <span class="separator">|</span>
           <a href="https://beian.miit.gov.cn/" target="_blank" class="beian">
             浙ICP备xxxxxxxx号-1
@@ -73,6 +74,13 @@ export default {
     },
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen
+    },
+    closeMenu() {
+      this.isMenuOpen = false
+    },
+    onNavClick() {
+      this.closeMenu()
+      this.scrollToTop()
     },
     scrollToTop() {
       window.scrollTo({

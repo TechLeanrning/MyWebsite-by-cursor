@@ -38,7 +38,16 @@
         </div>
       </div>
 
-      <form class="contact-form" @submit.prevent="submitForm">
+      <!-- EmailJS 未配置时，用微信引导替代表单 -->
+      <div v-if="!emailjsReady" class="form-fallback">
+        <i class="fab fa-weixin"></i>
+        <h2>微信联系更快</h2>
+        <p>留言表单配置中，建议直接微信扫码沟通，回复更及时。</p>
+        <img src="/images/qrcode.jpg" alt="微信二维码" class="fallback-qr">
+        <p class="fallback-wechat-id">微信号：In Blue $$ Sky</p>
+      </div>
+
+      <form v-else class="contact-form" @submit.prevent="submitForm">
         <h2>发送消息</h2>
         
         <div class="form-group">
@@ -119,6 +128,7 @@ export default {
         message: ''
       },
       submitting: false,
+      emailjsReady: false,
       notification: {
         show: false,
         message: '',
@@ -226,6 +236,10 @@ export default {
       const response = await fetch('/config/email.json')
       const config = await response.json()
       this.emailjsConfig = config.emailjs
+      // 密钥仍为占位符时判定为未配置，前端隐藏表单
+      const { serviceId, templateId, publicKey } = this.emailjsConfig
+      this.emailjsReady = [serviceId, templateId, publicKey]
+        .every(v => v && v !== 'xxx')
     } catch (error) {
       console.error('Failed to load email config:', error)
     }
@@ -334,6 +348,44 @@ export default {
   border-radius: 16px;
   padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* EmailJS 未配置时的微信引导卡片 */
+.form-fallback {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.form-fallback i {
+  font-size: 3rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.form-fallback h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-fallback p {
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.fallback-qr {
+  width: 180px;
+  height: 180px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.fallback-wechat-id {
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+  font-size: 0.9rem;
 }
 
 .contact-form h2 {

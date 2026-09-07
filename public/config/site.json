@@ -1,19 +1,38 @@
 {
   "social": {
     "github": "https://github.com/TechLeanrning",
-    "juejin": "https://juejin.cn/user/497439491241166",
-    "blog": "https://blog.csdn.net/your-blog"
+    "juejin": "https://juejin.cn/user/497439491241166"
   },
   "projects": [
     {
       "id": 1,
+      "name": "MyCrayfish · AI 办公助手平台",
+      "description": "私有化办公 AI 助手：AnythingLLM RAG 知识中枢 + UI-TARS GUI 自动化 + 自研零依赖网关 office-agent，六大办公技能包（文案/Word/PPT/表格/PDF/会议纪要），282 项回归测试全通过",
+      "image": "/images/projects/mycrayfish.svg",
+      "technologies": ["Node.js", "AnythingLLM", "UI-TARS", "RAG"],
+      "link": "https://github.com/TechLeanrning/MyCrayfish",
+      "blogPost": "",
+      "isHovered": false
+    },
+    {
+      "id": 2,
+      "name": "AI 知识库服务",
+      "description": "WeKnora 私有化部署、年度维护订阅与 Lite 单机版：把开源知识库跑在客户自己的机器上，支持微信直接问答，数据不出私域",
+      "image": "/images/projects/ai-services.svg",
+      "technologies": ["WeKnora", "Docker", "frp", "Nginx"],
+      "link": "/services",
+      "blogPost": "",
+      "isHovered": false
+    },
+    {
+      "id": 3,
       "name": "个人博客系统",
       "description": "基于 Vue3 开发的现代化博客系统，支持 Markdown 编辑和实时预览",
       "image": "/images/projects/blog.jpg",
       "technologies": ["Vue3", "Node.js", "Markdown"],
-      "link": "https://github.com/TechLeanrning/tech-blog",
-      "blogPost": "https://juejin.cn/post/your-post-id",
+      "link": "https://github.com/TechLeanrning/MyWebsite-by-cursor",
+      "blogPost": "",
       "isHovered": false
     }
   ]
-} 
+}
