@@ -147,7 +147,7 @@ export default {
   },
   data() {
     return {
-      defaultImage: '/images/posts/default.jpg',
+      defaultImage: '/images/posts/default.svg',
       posts: [],
       error: null,
       currentCategory: '全部',

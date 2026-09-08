@@ -13,7 +13,7 @@
           <a @click.prevent="scrollToSection('#projects')" class="nav-link" href="#projects">项目</a>
           <a @click.prevent="scrollToSection('#blog')" class="nav-link" href="#blog">文章</a>
           <a @click.prevent="scrollToSection('#stats')" class="nav-link" href="#stats">经验</a>
-          <router-link to="/contact" class="nav-link contact-link">
+          <router-link to="/contact" class="nav-link contact-link" @click="closeMenu">
             <i class="fas fa-paper-plane"></i>
             联系我
           </router-link>
@@ -89,11 +89,24 @@ export default {
       })
     },
     scrollToSection(selector) {
+      this.closeMenu()
       const element = document.querySelector(selector)
       if (element) {
         element.scrollIntoView({ 
           behavior: 'smooth',
           block: 'start'
+        })
+        return
+      }
+      // 不在首页时（锚点不存在），先回首页再滚动到目标区块
+      if (this.$route.path !== '/') {
+        this.$router.push('/').then(() => {
+          setTimeout(() => {
+            const target = document.querySelector(selector)
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+          }, 100)
         })
       }
     }

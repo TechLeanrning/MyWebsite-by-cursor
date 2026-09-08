@@ -17,11 +17,6 @@ const routes = [
     component: () => import('../views/Services.vue')
   },
   {
-    path: '/projects',
-    name: 'Projects',
-    component: () => import('../views/Projects.vue')
-  },
-  {
     path: '/contact',
     name: 'Contact',
     component: () => import('../views/Contact.vue')
@@ -30,6 +25,11 @@ const routes = [
     path: '/post/:id',
     name: 'PostDetail',
     component: PostDetail
+  },
+  {
+    // 兜底路由：未定义路径（含 /404）重定向回首页
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
   }
 ]
 
